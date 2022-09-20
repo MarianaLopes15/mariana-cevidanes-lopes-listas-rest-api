@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import br.com.aceleragep.listasRestAPI.configs.ControllerConfig;
+import br.com.aceleragep.listasRestAPI.converts.ItemConvert;
 import br.com.aceleragep.listasRestAPI.converts.ListaConvert;
 import br.com.aceleragep.listasRestAPI.dtos.inputs.ListaInput;
+import br.com.aceleragep.listasRestAPI.dtos.outputs.ItemOutput;
 import br.com.aceleragep.listasRestAPI.dtos.outputs.ListaOutput;
+import br.com.aceleragep.listasRestAPI.entities.ItemEntity;
 import br.com.aceleragep.listasRestAPI.entities.ListaEntity;
+import br.com.aceleragep.listasRestAPI.services.ItemService;
 import br.com.aceleragep.listasRestAPI.services.ListaService;
 
 @RestController
@@ -34,10 +38,16 @@ public class ListaController {
 
 	@Autowired
 	private ListaConvert listaConvert;
+	
+	@Autowired
+	private ItemService itemService;
+	
+	@Autowired
+	private ItemConvert itemConvert;
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public ListaOutput cria(@RequestBody @Valid ListaInput listaInput) throws URISyntaxException {
+	public ListaOutput criaLista(@RequestBody @Valid ListaInput listaInput) throws URISyntaxException {
 		ListaEntity listaEntity = listaConvert.inputToEntity(listaInput);
 		ListaEntity listaCriada = listaService.cria(listaEntity);
 		return listaConvert.entityToOutput(listaCriada);
@@ -65,8 +75,14 @@ public class ListaController {
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void removeLivro(@PathVariable Long id) {
+	public void removeLista(@PathVariable Long id) {
 		ListaEntity listaEntity = listaService.buscaPeloId(id);
 		listaService.remover(listaEntity);
+	}
+	
+	@GetMapping("/{idLista}/itens")
+	public List<ItemOutput> listarItens(@PathVariable Long idLista) {
+		List<ItemEntity> listaTodosItens = itemService.listarItensPelaLista(idLista);
+		return itemConvert.entityToOutput(listaTodosItens);
 	}
 }
