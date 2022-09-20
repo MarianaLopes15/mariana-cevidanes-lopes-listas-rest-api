@@ -86,6 +86,7 @@ public class ListaController {
 	@Operation(summary = "Remover Lista pelo Id", description = "Remover uma Lista e seus itens pelo seu Id")
 	public void removeLista(@Parameter(description = "Id da Lista", example = "1")@PathVariable Long id) {
 		ListaEntity listaEntity = listaService.buscaPeloId(id);
+		itemService.removerTodosItensDaLista(id);
 		listaService.remover(listaEntity);
 	}
 	

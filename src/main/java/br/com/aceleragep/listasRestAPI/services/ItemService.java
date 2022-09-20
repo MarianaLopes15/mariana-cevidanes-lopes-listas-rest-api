@@ -2,6 +2,8 @@ package br.com.aceleragep.listasRestAPI.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +25,8 @@ public class ItemService {
 				.orElseThrow(() -> new RuntimeException("Não foi encontrada o item pelo id: " + id));
 	}
 
-	public void remover(ItemEntity itemEntity) {
-		itemRepository.delete(itemEntity);
+	public void remover(Long id) {
+		itemRepository.delete(this.buscaPeloId(id));
 	}
 
 	public ItemEntity alterar(ItemEntity itemEntity) {
@@ -35,4 +37,10 @@ public class ItemService {
 		return itemRepository.findAllByListaId(idLista);
 	}
 
+	@Transactional
+	public void removerTodosItensDaLista(Long idLista) {
+		itemRepository.findAllByListaId(idLista).forEach(item ->{
+			this.remover(item.getId());
+		});
+	}
 }

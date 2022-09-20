@@ -66,8 +66,7 @@ public class ItemController {
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@Operation(summary = "Remover Item pelo Id", description = "Remover um Item pelo seu Id")
 	public void removeItem(@Parameter(description = "Id do Item", example = "1") @PathVariable Long id) {
-		ItemEntity itemEntity = itemService.buscaPeloId(id);
-		itemService.remover(itemEntity);
+		itemService.remover(id);
 	}
 	
 	private void converterIdListaParaListas(ItemInput itemInput, ItemEntity itemEntity) {

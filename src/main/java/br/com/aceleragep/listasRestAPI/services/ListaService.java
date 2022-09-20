@@ -32,8 +32,7 @@ public class ListaService {
 	}
 
 	public void remover(ListaEntity listaEntity) {
-		listaRepository.delete(listaEntity);
-		
+		listaRepository.delete(listaEntity);		
 	}
 
 }
