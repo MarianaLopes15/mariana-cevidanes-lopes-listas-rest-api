@@ -28,7 +28,11 @@ import br.com.aceleragep.listasRestAPI.entities.ItemEntity;
 import br.com.aceleragep.listasRestAPI.entities.ListaEntity;
 import br.com.aceleragep.listasRestAPI.services.ItemService;
 import br.com.aceleragep.listasRestAPI.services.ListaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Lista")
 @RestController
 @RequestMapping(ControllerConfig.PRE_URL + "/listas")
 public class ListaController {
@@ -47,6 +51,7 @@ public class ListaController {
 
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(summary = "Criar nova Lista", description = "Criar uma nova Lista")
 	public ListaOutput criaLista(@RequestBody @Valid ListaInput listaInput) throws URISyntaxException {
 		ListaEntity listaEntity = listaConvert.inputToEntity(listaInput);
 		ListaEntity listaCriada = listaService.cria(listaEntity);
@@ -54,7 +59,8 @@ public class ListaController {
 	}
 
 	@PutMapping("/{id}")
-	public ListaOutput alteraLista(@PathVariable Long id, @Valid @RequestBody ListaInput listaInput) {
+	@Operation(summary = "Alterar Lista", description = "Alterar uma Lista com os novos dados")
+	public ListaOutput alteraLista(@Parameter(description = "Id da Lista", example = "1") @PathVariable Long id, @Valid @RequestBody ListaInput listaInput) {
 		ListaEntity listaEntity = listaConvert.inputToEntity(listaInput);
 		listaEntity.setId(id);
 		ListaEntity listaAlterada = listaService.alterar(listaEntity);
@@ -62,12 +68,14 @@ public class ListaController {
 	}
 
 	@GetMapping("/{id}")
-	public ListaOutput buscaListaPorId(@PathVariable Long id) {
+	@Operation(summary = "Busca Lista pelo Id", description = "Buscar uma Lista pelo seu Id")
+	public ListaOutput buscaListaPorId(@Parameter(description = "Id da Lista", example = "1") @PathVariable Long id) {
 		ListaEntity listaEntity = listaService.buscaPeloId(id);
 		return listaConvert.entityToOutput(listaEntity);
 	}
 
 	@GetMapping
+	@Operation(summary = "Listar todas as Lista", description = "Listar todas as Listas cadastradas")
 	public List<ListaOutput> listarListas() {
 		List<ListaEntity> listaTodos = listaService.listarListas();
 		return listaConvert.entityToOutput(listaTodos);
@@ -75,12 +83,14 @@ public class ListaController {
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void removeLista(@PathVariable Long id) {
+	@Operation(summary = "Remover Lista pelo Id", description = "Remover uma Lista e seus itens pelo seu Id")
+	public void removeLista(@Parameter(description = "Id da Lista", example = "1")@PathVariable Long id) {
 		ListaEntity listaEntity = listaService.buscaPeloId(id);
 		listaService.remover(listaEntity);
 	}
 	
 	@GetMapping("/{idLista}/itens")
+	@Operation(summary = "Listar todos os Itens da Lista", description = "Listar todos os Itens cadastrados em uma Lista")
 	public List<ItemOutput> listarItens(@PathVariable Long idLista) {
 		List<ItemEntity> listaTodosItens = itemService.listarItensPelaLista(idLista);
 		return itemConvert.entityToOutput(listaTodosItens);

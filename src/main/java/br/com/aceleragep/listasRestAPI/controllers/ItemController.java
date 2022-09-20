@@ -23,7 +23,11 @@ import br.com.aceleragep.listasRestAPI.entities.ItemEntity;
 import br.com.aceleragep.listasRestAPI.entities.ListaEntity;
 import br.com.aceleragep.listasRestAPI.services.ItemService;
 import br.com.aceleragep.listasRestAPI.services.ListaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
+@Tag(name = "Item")
 @RestController
 @RequestMapping(ControllerConfig.PRE_URL + "/itens")
 public class ItemController {
@@ -39,6 +43,7 @@ public class ItemController {
 	
 	@PostMapping
 	@ResponseStatus(code = HttpStatus.CREATED)
+	@Operation(summary = "Criar novo Item", description = "Criar um novo Item em uma Lista")
 	public ItemOutput criaItem(@RequestBody @Valid ItemInput itemInput) throws URISyntaxException {
 		ItemEntity itemEntity = itemConvert.inputToEntity(itemInput);
 		converterIdListaParaListas(itemInput, itemEntity);
@@ -47,7 +52,8 @@ public class ItemController {
 	}
 
 	@PutMapping("/{id}")
-	public ItemOutput alteraItem(@PathVariable Long id, @Valid @RequestBody ItemInput itemInput) {
+	@Operation(summary = "Alterar Item", description = "Alterar um Item com os novos dados")
+	public ItemOutput alteraItem(@Parameter(description = "Id do Item", example = "1") @PathVariable Long id, @Valid @RequestBody ItemInput itemInput) {
 		ItemEntity itemEntity = itemService.buscaPeloId(id);
 		itemConvert.newInputToEntity(itemEntity, itemInput);
 		converterIdListaParaListas(itemInput, itemEntity);
@@ -58,7 +64,8 @@ public class ItemController {
 		
 	@DeleteMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
-	public void removeItem(@PathVariable Long id) {
+	@Operation(summary = "Remover Item pelo Id", description = "Remover um Item pelo seu Id")
+	public void removeItem(@Parameter(description = "Id do Item", example = "1") @PathVariable Long id) {
 		ItemEntity itemEntity = itemService.buscaPeloId(id);
 		itemService.remover(itemEntity);
 	}
