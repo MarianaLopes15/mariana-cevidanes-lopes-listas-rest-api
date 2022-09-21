@@ -15,8 +15,8 @@ Projeto de um REST API para organizar listas e itens, realizado por Mariana Lope
 ## Listas
 - `Funcionalidade 1` `Cadastro de Listas`: Para cadastrar uma lista, deve ser informado seu titulo. O campo titulo deve ter no maximo 100 caracteres e no minimo 1, sendo obrigatória sua inserção.
 - `Funcionalidade 2` `Alteração de Listas pelo id`: Para a alteração de uma lista pelo seu id, é preciso informar obrigatoriamente o seu id. Podendo alterar seu titulo. O campo titulo deve ter no maximo 100 caracteres e no minimo 1, sendo obrigatória sua inserção.
-- `Funcionalidade 3` `Buscar lista pelo id`: Para realizar a busca de uma lista pelo seu id, é preciso informar obrigatoriamente seu id. O sistema ira retornar o titulo da lista e questão
-- `Funcionalidade 4` `Listar todas as listas`: Lista todas as listas cadastradas na API. 
+- `Funcionalidade 3` `Buscar lista pelo id`: Para realizar a busca de uma lista pelo seu id, é preciso informar obrigatoriamente seu id. O sistema ira retornar o titulo da lista em questão
+- `Funcionalidade 4` `Listar todas as listas`: O sistema ira listar todas as listas cadastradas na API. 
 - `Funcionalidade 5` `Excluir uma lista pelo id`: Para a exclusão de uma lista pelo seu id, é preciso informar obrigatoriamente seu id. Resultando na exclusão da lista e de seus itens
 - `Funcionalidade 6` `Listar todos os itens da lista pelo id da lista`: Para listar todos os itens de uma determinada lista é preciso informar obrigatoriamente o id da lista. O sistema ira retorna todos os itens da lista indicada que estão cadastrados. 
 
