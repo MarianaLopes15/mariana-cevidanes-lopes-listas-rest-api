@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.aceleragep.listasRestAPI.entities.ListaEntity;
+import br.com.aceleragep.listasRestAPI.exceptions.NotFoundBussinessException;
 import br.com.aceleragep.listasRestAPI.repositories.ListaRepository;
 
 @Service
@@ -28,7 +29,7 @@ public class ListaService {
 
 	public ListaEntity buscaPeloId(Long id) {
 		return listaRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Não foi encontrada a lista pelo id: " + id));
+				.orElseThrow(() -> new NotFoundBussinessException("Não foi encontrada a lista pelo id: " + id));
 	}
 
 	public void remover(ListaEntity listaEntity) {

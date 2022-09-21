@@ -61,8 +61,8 @@ public class ListaController {
 	@PutMapping("/{id}")
 	@Operation(summary = "Alterar Lista", description = "Alterar uma Lista com os novos dados")
 	public ListaOutput alteraLista(@Parameter(description = "Id da Lista", example = "1") @PathVariable Long id, @Valid @RequestBody ListaInput listaInput) {
-		ListaEntity listaEntity = listaConvert.inputToEntity(listaInput);
-		listaEntity.setId(id);
+		ListaEntity listaEntity = listaService.buscaPeloId(id);
+		listaConvert.inputToEntity(listaInput);
 		ListaEntity listaAlterada = listaService.alterar(listaEntity);
 		return listaConvert.entityToOutput(listaAlterada);
 	}

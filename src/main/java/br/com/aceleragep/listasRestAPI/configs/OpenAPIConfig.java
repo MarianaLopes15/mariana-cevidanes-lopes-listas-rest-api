@@ -25,8 +25,8 @@ public class OpenAPIConfig {
 				 );
 
 		openApi.info(info);
-		openApi.addTagsItem(new Tag().name("Lista:").description("Controller das Listas"));
-		openApi.addTagsItem(new Tag().name("Item:").description("Controller dos Itens"));
+		openApi.addTagsItem(new Tag().name("Lista").description("Controller das Listas"));
+		openApi.addTagsItem(new Tag().name("Item").description("Controller dos Itens"));
 		return openApi;
 	}
 }
